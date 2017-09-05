@@ -5245,10 +5245,20 @@ namespace Microsoft.Azure.Management.HDInsight
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            string clusterMonitoringEnabledInstance = ((string)responseDoc);
-                            result.ClusterMonitoringEnabled = clusterMonitoringEnabledInstance;
+                            JToken clusterMonitoringEnabledValue = responseDoc["clusterMonitoringEnabled"];
+                            if (clusterMonitoringEnabledValue != null && clusterMonitoringEnabledValue.Type != JTokenType.Null)
+                            {
+                                bool clusterMonitoringEnabledInstance = ((bool)clusterMonitoringEnabledValue);
+                                result.ClusterMonitoringEnabled = clusterMonitoringEnabledInstance;
+                            }
+                            
+                            JToken workspaceIdValue = responseDoc["workspaceId"];
+                            if (workspaceIdValue != null && workspaceIdValue.Type != JTokenType.Null)
+                            {
+                                string workspaceIdInstance = ((string)workspaceIdValue);
+                                result.WorkspaceId = workspaceIdInstance;
+                            }
                         }
-                        
                     }
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))

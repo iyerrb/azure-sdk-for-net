@@ -30,16 +30,28 @@ namespace Microsoft.Azure.Management.HDInsight.Models
     /// </summary>
     public partial class ClusterMonitoringResponse : AzureOperationResponse
     {
-        private string _clusterMonitoringEnabled;
+        private bool _clusterMonitoringEnabled;
         
         /// <summary>
         /// Required. Gets the status of Operations Management Suite on the
         /// HDInsight cluster.
         /// </summary>
-        public string ClusterMonitoringEnabled
+        public bool ClusterMonitoringEnabled
         {
             get { return this._clusterMonitoringEnabled; }
             set { this._clusterMonitoringEnabled = value; }
+        }
+        
+        private string _workspaceId;
+        
+        /// <summary>
+        /// Optional. Gets the workspace ID of Operations Management Suite on
+        /// the HDInsight cluster.
+        /// </summary>
+        public string WorkspaceId
+        {
+            get { return this._workspaceId; }
+            set { this._workspaceId = value; }
         }
         
         /// <summary>
@@ -53,13 +65,9 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// Initializes a new instance of the ClusterMonitoringResponse class
         /// with required arguments.
         /// </summary>
-        public ClusterMonitoringResponse(string clusterMonitoringEnabled)
+        public ClusterMonitoringResponse(bool clusterMonitoringEnabled)
             : this()
         {
-            if (clusterMonitoringEnabled == null)
-            {
-                throw new ArgumentNullException("clusterMonitoringEnabled");
-            }
             this.ClusterMonitoringEnabled = clusterMonitoringEnabled;
         }
     }

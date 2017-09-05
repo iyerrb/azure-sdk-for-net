@@ -44,15 +44,16 @@ namespace HDInsight.Tests
 
 					// validate that monitoring is enabled
                     var enablemon = client.Clusters.GetMonitoringStatus(resourceGroup, dnsName);
-                    Assert.True(enablemon.ClusterMonitoringEnabled.Contains(clusterMonitoringParams.WorkspaceId), "The OMS workspace was not enabled properly");
-
-					// disable monitoring on the cluster
+                    Assert.True(enablemon.ClusterMonitoringEnabled, "The OMS workspace was not enabled properly");
+                    Assert.Equal(enablemon.WorkspaceId, clusterMonitoringParams.WorkspaceId);
+					
+                    // disable monitoring on the cluster
                     response = client.Clusters.DisableMonitoring(resourceGroup, dnsName);
                     Assert.Equal(AsyncOperationState.Succeeded, response.State);
 
 					// validate that monitoring is disabled
                     var disablemon = client.Clusters.GetMonitoringStatus(resourceGroup, dnsName);
-                    Assert.True(disablemon.ClusterMonitoringEnabled.Contains("false"), "The OMS workspace was not disabled properly");
+                    Assert.False(disablemon.ClusterMonitoringEnabled, "The OMS workspace was not disabled properly");
                 }
                 finally
                 {
